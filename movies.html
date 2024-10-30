@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Movies</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rubik+Wet+Paint&family=Spicy+Rice&display=swap" rel="stylesheet">
+    <style>
+        .back {
+            background-image: url('https://i.pinimg.com/1200x/50/bd/44/50bd448046dba9c6e2ca2d7203ae399a.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+        .main-background h1 {
+            font-family: "Spicy Rice", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .nav-band h1 {
+            font-family: "Rubik Wet Paint", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-10">
+    <nav class="bg-white shadow">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <div class="nav-band">
+                <h1 class="text-5xl">Movie-J</h1>
+            </div>
+            <div class="space-x-4">
+                <a href="index.html" class="text-gray-700 hover:text-blue-500 text-2xl">Home</a>
+                <a href="#about" class="text-gray-700 hover:text-blue-500 text-2xl">About</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-500 text-2xl">Contact</a>
+            </div>
+            <div id="auth-buttons" class="flex space-x-4">
+                <button onclick="logout()" class="bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600" style="display: none;">
+                    Logout
+                </button>
+                <button id="register-btn" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">
+                    <a href="register.html" class="text-white">Registration</a>
+                </button>
+                <button id="login-btn" class="bg-green-500 text-white font-semibold py-2 px-4 rounded hover:bg-green-600">
+                    <a href="login.html" class="text-white">Login</a>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="bg-white shadow p-4 mb-6">
+        <h1 class="text-2xl font-bold">Movie Rental</h1>
+    </nav>
+
+    <h1 class="text-3xl font-bold mb-4">Movie Catalog</h1>
+
+    <div class="mb-4 flex space-x-4">
+        <div>
+            <label for="genre-select" class="block mb-2">Select Genre:</label>
+            <select id="genre-select" class="p-2 border rounded" onchange="filterMovies()">
+                <option value="all">All</option>
+                <option value="Action">Action</option>
+                <option value="Drama">Drama</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="search-input" class="block mb-2">Search:</label>
+            <input type="text" id="search-input" class="p-2 border rounded" placeholder="Search by title, genre, or release year" oninput="filterMovies()">
+        </div>
+    </div>
+
+    <div id="movie-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+
+    <script>
+        let movies = [];
+
+        // Fetch and parse the movies from the XML file
+        async function fetchMovies() {
+            try {
+                const response = await fetch("movies.xml");
+                const xmlText = await response.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+
+                movies = Array.from(xmlDoc.getElementsByTagName("movie")).map(movieNode => ({
+                    id: movieNode.getElementsByTagName("id")[0].textContent,
+                    title: movieNode.getElementsByTagName("title")[0].textContent,
+                    genre: movieNode.getElementsByTagName("genre")[0].textContent,
+                    releaseYear: parseInt(movieNode.getElementsByTagName("releaseYear")[0].textContent),
+                    rented: movieNode.getElementsByTagName("rented")[0].textContent === "true",
+                    image: movieNode.getElementsByTagName("image")[0].textContent,
+                }));
+
+                displayMovies(movies);
+            } catch (error) {
+                console.error("Failed to fetch movies:", error);
+            }
+        }
+
+        // Display movies on the page
+        function displayMovies(moviesToDisplay) {
+            const movieList = document.getElementById("movie-list");
+            movieList.innerHTML = "";
+
+            moviesToDisplay.forEach(movie => {
+                const movieCard = document.createElement("div");
+                movieCard.className = "bg-white p-4 rounded shadow";
+                movieCard.innerHTML = `
+                    <img src="${movie.image}" alt="${movie.title} poster" class="w-full h-64 object-cover mb-4 rounded">
+                    <h2 class="font-bold text-xl">${movie.title}</h2>
+                    <p><strong>Genre:</strong> ${movie.genre}</p>
+                    <p><strong>Year:</strong> ${movie.releaseYear}</p>
+                    <button class="bg-green-500 text-white font-semibold py-1 px-2 rounded mt-2" onclick="rentMovie(${movie.id})">${movie.rented ? "Return" : "Rent"}</button>
+                `;
+                movieList.appendChild(movieCard);
+            });
+        }
+
+        // Filter movies by genre or search
+        function filterMovies() {
+            const genreSelect = document.getElementById("genre-select").value;
+            const searchInput = document.getElementById("search-input").value.toLowerCase();
+
+            const filteredMovies = movies.filter(movie => {
+                const matchesGenre = genreSelect === "all" || movie.genre === genreSelect;
+                const matchesSearch = movie.title.toLowerCase().includes(searchInput) || 
+                                      movie.genre.toLowerCase().includes(searchInput) ||
+                                      movie.releaseYear.toString().includes(searchInput);
+                return matchesGenre && matchesSearch;
+            });
+
+            displayMovies(filteredMovies);
+        }
+
+        // Rent or return a movie
+        function rentMovie(id) {
+            const movie = movies.find(m => m.id == id);
+            if (movie) {
+                movie.rented = !movie.rented;
+                alert(`${movie.rented ? "Rented" : "Returned"}: ${movie.title}`);
+                displayMovies(movies); // Refresh the list to show the updated button
+            }
+        }
+
+        // Fetch and display movies on page load
+        fetchMovies();
+    </script>
+</body>
+</html>

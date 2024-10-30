@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<movies>
+    <movie>
+        <id>1</id>
+        <title>Inception</title>
+        <genre>Sci-Fi</genre>
+        <releaseYear>2010</releaseYear>
+        <rented>false</rented>
+        <image>https://via.placeholder.com/150x225?text=Inception</image>
+    </movie>
+    <movie>
+        <id>2</id>
+        <title>The Dark Knight</title>
+        <genre>Action</genre>
+        <releaseYear>2008</releaseYear>
+        <rented>false</rented>
+        <image>https://via.placeholder.com/150x225?text=The+Dark+Knight</image>
+    </movie>
+    <!-- Add more movies here -->
+</movies>

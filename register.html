@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+        <form id="register-form">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700" for="register-username">Username</label>
+                <input type="text" id="register-username" required class="mt-1 p-2 border border-gray-300 rounded w-full" placeholder="Choose a Username">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700" for="register-email">Email</label>
+                <input type="email" id="register-email" required class="mt-1 p-2 border border-gray-300 rounded w-full" placeholder="Your Email Address">
+                <small id="email-error" class="text-red-500"></small>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700" for="register-password">Password</label>
+                <input type="password" id="register-password" required class="mt-1 p-2 border border-gray-300 rounded w-full" placeholder="Choose a Password">
+                <small id="password-error" class="text-red-500"></small>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600">Register</button>
+        </form>
+        <p class="mt-4 text-center">Already have an account? <a href="login.html" class="text-blue-500 hover:underline">Login</a></p>
+    </div>
+
+    <script>
+        document.getElementById("register-form").addEventListener("submit", function(event) {
+            const emailInput = document.getElementById("register-email");
+            const passwordInput = document.getElementById("register-password");
+            const emailError = document.getElementById("email-error");
+            const passwordError = document.getElementById("password-error");
+
+            let isValid = true;
+
+            // Email Validation
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(emailInput.value)) {
+                emailError.textContent = "Please enter a valid email address.";
+                isValid = false;
+            } else {
+                emailError.textContent = "";
+            }
+
+            // Password Validation
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            if (!passwordPattern.test(passwordInput.value)) {
+                passwordError.textContent = "Password must be at least 8 characters, include an uppercase letter, a lowercase letter, and a number.";
+                isValid = false;
+            } else {
+                passwordError.textContent = "";
+            }
+
+            // Prevent form submission if invalid
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

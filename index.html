@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Rental - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rubik+Wet+Paint&family=Spicy+Rice&display=swap" rel="stylesheet">
+    <style>
+        .back {
+            background-image: url('https://i.pinimg.com/1200x/1a/e4/aa/1ae4aa99f695dc5ea2d6af25e4bcf688.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+        .main-background h1 {
+            font-family: "Spicy Rice", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .nav-band h1 {
+            font-family: "Rubik Wet Paint", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6 md:p-10 back" onload="checkLoginStatus()">
+    <nav class="bg-white shadow">
+        <div class="container mx-auto flex flex-wrap justify-between items-center p-4">
+            <div class="nav-band">
+                <h1 class="text-4xl md:text-5xl">Movie-J</h1>
+            </div>
+            <div class="hidden md:flex space-x-4">
+                <a href="index.html" class="text-gray-700 hover:text-blue-500 text-lg md:text-2xl">Home</a>
+                <a href="#about" class="text-gray-700 hover:text-blue-500 text-lg md:text-2xl">About</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-500 text-lg md:text-2xl">Contact</a>
+            </div>
+            <div id="auth-buttons" class="flex space-x-4 mt-4 md:mt-0">
+                <button onclick="logout()" class="bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600" style="display: none;">
+                    Logout
+                </button>
+                <button id="register-btn" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">
+                    <a href="register.html" class="text-white">Registration</a>
+                </button>
+                <button id="login-btn" class="bg-green-500 text-white font-semibold py-2 px-4 rounded hover:bg-green-600">
+                    <a href="login.html" class="text-white">Login</a>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 md:px-40 py-10 mt-10 text-center main-background">
+        <h1 class="text-5xl md:text-9xl pt-10 font-bold text-white">Welcome to the Website!</h1>
+        <div class="mt-10"> 
+            <a href="login.html" class="bg-blue-500 text-white text-lg md:text-2xl font-semibold py-2 px-6 md:py-4 md:px-10 hover:bg-blue-600">View Movies</a>
+        </div>
+    </main>
+
+    <section class="bg-white py-12">
+        <div class="container mx-auto px-4 md:px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-black">About Movie-J</h2>
+            <p class="text-base md:text-lg mb-8 text-gray-600">
+                At Movie-J, we're passionate about bringing you an unparalleled movie rental experience. Whether you're a fan of classic dramas, edge-of-your-seat thrillers, or captivating animations, our vast collection is curated to cater to every taste. With a seamless browsing experience, we make it easy to find and rent the films you love.
+            </p>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-8">
+                <div class="bg-gray-100 p-6 rounded shadow-md">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-2 text-gray-800">Why Choose Us?</h3>
+                    <p class="text-gray-700">Our user-friendly platform, extensive catalog, and competitive rental rates make us a go-to destination for movie lovers. We also prioritize quality by ensuring all rentals are in the best condition for a perfect viewing experience.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded shadow-md">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-2 text-gray-800">Our Mission</h3>
+                    <p class="text-gray-700">Our mission is to connect people with the power of storytelling through films. We aim to make top-rated movies accessible to everyone, bringing communities together over shared cinematic experiences.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded shadow-md">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-2 text-gray-800">How We Operate</h3>
+                    <p class="text-gray-700">With a streamlined rental process, Movie-J allows you to browse by genre, release year, or popularity. Our easy check-out and return options make movie rentals hassle-free, so you can focus on enjoying the film.</p>
+                </div>
+            </div>
+            
+            <div class="mt-10">
+                <h3 class="text-lg md:text-xl font-semibold text-gray-800">Join us on a journey through the world of movies – because every story deserves to be seen.</h3>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="container mx-auto mt-20 p-6 md:p-10 bg-white rounded shadow-lg">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">Contact Us</h2>
+        <form class="space-y-4 md:space-y-6">
+            <div>
+                <label for="name" class="block text-lg font-semibold">Name</label>
+                <input type="text" id="name" class="w-full p-3 border rounded" placeholder="Your Name" required>
+            </div>
+            <div>
+                <label for="email" class="block text-lg font-semibold">Email</label>
+                <input type="email" id="email" class="w-full p-3 border rounded" placeholder="Your Email" required>
+            </div>
+            <div>
+                <label for="message" class="block text-lg font-semibold">Message</label>
+                <textarea id="message" rows="4" class="w-full p-3 border rounded" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white font-semibold py-3 px-6 rounded hover:bg-blue-600">
+                Send Message
+            </button>
+        </form>
+    </section>
+
+    <script>
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem("loggedIn");
+            const loginButton = document.getElementById("login-btn");
+            const registerButton = document.getElementById("register-btn");
+            const logoutButton = document.querySelector("button[onclick='logout()']");
+
+            if (isLoggedIn) {
+                loginButton.style.display = "none";
+                registerButton.style.display = "none";
+                logoutButton.style.display = "inline-block";
+            } else {
+                loginButton.style.display = "inline-block";
+                registerButton.style.display = "inline-block";
+                logoutButton.style.display = "none";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

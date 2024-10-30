@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user id="1">
+        <username>john doe</username>
+        <password>password123</password>
+        <rentals>
+            <rental>
+                <movie id="1">Inception</movie>
+                <rented_on>2024-09-01</rented_on>
+                <returned>false</returned>
+            </rental>
+            <rental>
+                <movie id="2">The Matrix</movie>
+                <rented_on>2024-09-15</rented_on>
+                <returned>true</returned>
+            </rental>
+        </rentals>
+    </user>
+    <user id="2">
+        <username>jane smith</username>
+        <password>mypassword</password>
+        <rentals>
+            <rental>
+                <movie id="3">Interstellar</movie>
+                <rented_on>2024-09-10</rented_on>
+                <returned>false</returned>
+            </rental>
+        </rentals>
+    </user>
+    <!-- Additional user records -->
+    <user id="3">
+        <username>alice jones</username>
+        <password>alicepassword</password>
+        <rentals>
+            <rental>
+                <movie id="4">Avatar</movie>
+                <rented_on>2024-09-20</rented_on>
+                <returned>true</returned>
+            </rental>
+        </rentals>
+    </user>
+</users>
